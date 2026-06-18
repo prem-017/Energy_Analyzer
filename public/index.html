@@ -27,6 +27,28 @@
     </section>
 
     <section class="panel">
+      <h2>Household Survey</h2>
+      <form id="surveyForm">
+        <label>Family size<input type="number" name="familySize" min="1" step="1" required /></label>
+        <label>Total rooms<input type="number" name="totalRooms" min="1" step="1" required /></label>
+        <label>Total LED bulbs<input type="number" name="ledBulbs" min="0" step="1" required /></label>
+        <label>Grid availability hours/day<input type="number" name="gridHours" min="0" max="24" step="0.1" required /></label>
+        <label>Refrigerators<input type="number" name="refrigerators" min="0" step="1" required /></label>
+        <label>Water motors<input type="number" name="waterMotors" min="0" step="1" required /></label>
+        <label>Fans<input type="number" name="fans" min="0" step="1" required /></label>
+        <label>Power cut hours/month<input type="number" name="powerCutHours" min="0" step="1" required /></label>
+        <label>Online usage hours/day<input type="number" name="onlineHours" min="0" max="24" step="0.1" required /></label>
+        <label>Monthly income<input type="number" name="monthlyIncome" min="0" step="10" required /></label>
+        <button type="submit">Get Suggestions</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Personalized Suggestions</h2>
+      <ul id="surveySuggestions"></ul>
+    </section>
+
+    <section class="panel">
       <h2>Usage History</h2>
       <table>
         <thead>

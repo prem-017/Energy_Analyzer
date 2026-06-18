@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { initDb, getUsageEntries, addUsageEntry } = require('./db');
+const suggestionDatasets = require('./data/suggestion_datasets.json');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -89,6 +90,10 @@ app.get('/api/summary', async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Failed to calculate summary.' });
   }
+});
+
+app.get('/api/suggestion-datasets', (req, res) => {
+  res.json(suggestionDatasets);
 });
 
 initDb()

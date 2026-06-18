@@ -1,0 +1,66 @@
+{
+  "lighting": {
+    "needsMoreLED": [
+      "Replace remaining bulbs with LEDs and switch off lights in empty rooms."
+    ],
+    "goodCoverage": [
+      "Your lighting setup is strong; keep lights only on in occupied spaces."
+    ]
+  },
+  "refrigeration": {
+    "multiple": [
+      "Multiple refrigerators can add cost; keep only active units plugged in and set temperatures efficiently."
+    ],
+    "single": [
+      "Maintain one fridge by keeping it well sealed and defrosted to save energy."
+    ],
+    "none": [
+      "No refrigerators detected; ensure your cooling equipment, if any, is used efficiently."
+    ]
+  },
+  "waterMotors": [
+    "Run water motors only when necessary and repair leaks to reduce pump runtime."
+  ],
+  "fans": [
+    "Use fans in occupied rooms only and turn them off when not needed."
+  ],
+  "gridHours": {
+    "limited": [
+      "With limited grid supply, use low-power devices and backup lighting during outages."
+    ],
+    "available": [
+      "When grid power is available, shift heavy appliance use to daytime or off-peak hours."
+    ]
+  },
+  "powerCuts": [
+    "During frequent power cuts, unplug idle electronics to protect them and reduce phantom loads."
+  ],
+  "household": [
+    "Coordinate appliance use across the household to avoid running many devices simultaneously."
+  ],
+  "income": {
+    "low": [
+      "Prioritize low-cost savings like turning off unused lights, fans, and chargers."
+    ],
+    "high": [
+      "Consider investing in efficient appliances, LED lighting, and smart power strips."
+    ]
+  },
+  "unusedRooms": [
+    "Close doors to unused rooms and focus lighting and fans only in occupied areas."
+  ],
+  "online": {
+    "highUsage": [
+      "Limit online streaming and reduce energy draw by using energy-efficient devices and lower screen brightness."
+    ],
+    "activeUse": [
+      "Power down routers and online devices when not in use to cut standby energy use."
+    ],
+    "unused": [
+      "Keep online devices off when internet activity is not needed to save energy."
+    ]
+  },
+  "fallback": [
+    "Review device use and switch off appliances when not needed to lower the current bill."
+  ]
+}
