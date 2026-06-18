@@ -25,6 +25,13 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * @typedef {{ date: string, hours: number, watts: number, cost: number }} UsageEntry
+ */
+
+/**
+ * @param {UsageEntry[]} entries
+ */
 function calculateSummary(entries) {
   const totalKwh = entries.reduce((sum, item) => sum + (item.watts / 1000) * item.hours, 0);
   const totalCost = entries.reduce((sum, item) => sum + item.cost, 0);
