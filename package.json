@@ -1,0 +1,16 @@
+{
+  "name": "energy-consumption-analyzer",
+  "version": "1.0.0",
+  "description": "Energy Consumption Analyzer for Households",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["energy", "electricity", "analytics", "dashboard"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.4",
+    "pg": "^8.11.0"
+  }
+}

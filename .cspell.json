@@ -1,0 +1,26 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "clickjacking",
+    "Clickjacking",
+    "Exfiltration",
+    "XSS",
+    "CSP",
+    "XMLHttpRequest",
+    "WebSocket",
+    "iframes",
+    "Base64",
+    "OWASP",
+    "DevTools",
+    "extHost",
+    "postMessage",
+    "PGUSER",
+    "PGPASSWORD",
+    "PGHOST",
+    "PGPORT",
+    "PGDATABASE"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

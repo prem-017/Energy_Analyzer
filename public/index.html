@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Energy Consumption Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Energy Consumption Analyzer</h1>
+    <p>Monitor your household electricity usage and discover simple ways to save energy.</p>
+  </header>
+
+  <main>
+    <section class="cards" id="summaryCards"></section>
+
+    <section class="panel">
+      <h2>Log New Usage</h2>
+      <form id="usageForm">
+        <label>Date<input type="date" name="date" required /></label>
+        <label>Hours used<input type="number" name="hours" step="0.1" min="0" required /></label>
+        <label>Power (Watts)<input type="number" name="watts" min="0" required /></label>
+        <label>Cost ($)<input type="number" name="cost" step="0.01" min="0" required /></label>
+        <button type="submit">Add Entry</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2>Usage History</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Watts</th>
+            <th>kWh</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <tbody id="usageTable"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Recommendations</h2>
+      <ul id="recommendations"></ul>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
