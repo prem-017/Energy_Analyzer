@@ -5,10 +5,14 @@
             "previewLimit": 50,
             "server": "localhost",
             "port": 5432,
+            "askForPassword": true,
             "driver": "PostgreSQL",
             "name": "consuption",
             "database": "Energy analyzer",
             "username": "postgres"
         }
+    ],
+    "dataworkspace.excludedProjects": [
+        "25765A5407/25765A5407.sqlproj"
     ]
 }

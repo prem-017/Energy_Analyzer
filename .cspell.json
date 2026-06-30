@@ -19,8 +19,13 @@
     "PGPASSWORD",
     "PGHOST",
     "PGPORT",
-    "PGDATABASE"
+    "PGDATABASE",
+    "BLDC"
   ],
   "ignoreWords": [],
+  "ignorePaths": [
+    "dist",
+    "dist/**"
+  ],
   "import": []
 }

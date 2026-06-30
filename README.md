@@ -8,13 +8,13 @@ A simple Node.js + Express web app for tracking household electricity usage and 
 - View usage history and calculate kWh
 - Summary cards for total consumption, cost, average daily usage, and projections
 - Recommendations for energy savings
-- PostgreSQL support with local JSON fallback when database credentials are unavailable
+- Local JSON storage by default, with optional PostgreSQL support
 
 ## Requirements
 
 - Node.js 18+ (or compatible)
 - npm
-- PostgreSQL (optional) or local JSON fallback
+- PostgreSQL (optional)
 
 ## Installation
 
@@ -41,7 +41,9 @@ http://localhost:3000
 
 ## Database
 
-The app attempts to connect to PostgreSQL using the following environment variables:
+By default, the app stores usage entries in `data/usage_entries.json`.
+
+To use PostgreSQL instead, provide one or more of the following environment variables before starting the server:
 
 - `DATABASE_URL`
 - `PGUSER`
@@ -50,7 +52,7 @@ The app attempts to connect to PostgreSQL using the following environment variab
 - `PGPORT`
 - `PGDATABASE`
 
-If PostgreSQL is unavailable or authentication fails, the app will automatically fall back to a local JSON file at `data/usage_entries.json`.
+If PostgreSQL is configured but unavailable or authentication fails, the app will automatically fall back to the local JSON file.
 
 ## Project Structure
 

@@ -3,18 +3,24 @@ const path = require('path');
 const { Pool } = require('pg');
 
 const jsonDbPath = path.join(__dirname, 'data', 'usage_entries.json');
+const postgresEnvKeys = ['DATABASE_URL', 'PGUSER', 'PGPASSWORD', 'PGHOST', 'PGPORT', 'PGDATABASE'];
+const hasPostgresConfig = postgresEnvKeys.some((key) => Boolean(process.env[key]));
 const poolConfig = process.env.DATABASE_URL
   ? { connectionString: process.env.DATABASE_URL }
   : {
-      user: process.env.PGUSER || 'postgres',
-      password: process.env.PGPASSWORD || 'postgres',
+      user: process.env.PGUSER,
+      password: process.env.PGPASSWORD,
       host: process.env.PGHOST || 'localhost',
       port: process.env.PGPORT ? Number(process.env.PGPORT) : 5432,
       database: process.env.PGDATABASE || 'energy_analyzer'
     };
 
-const pool = new Pool(poolConfig);
+const pool = hasPostgresConfig ? new Pool(poolConfig) : null;
 let useJsonFallback = false;
+
+/**
+ * @typedef {{ id: number, date: string, hours: number, watts: number, cost: number }} UsageEntry
+ */
 
 const sampleEntries = [
   { id: 1, date: '2026-06-01', hours: 4, watts: 1200, cost: 0.8 },
@@ -33,21 +39,31 @@ function ensureJsonStorage() {
   }
 }
 
+/**
+ * @returns {UsageEntry[]}
+ */
 function readJsonEntries() {
   try {
     const content = fs.readFileSync(jsonDbPath, 'utf8');
-    return JSON.parse(content);
+    return /** @type {UsageEntry[]} */ (JSON.parse(content));
   } catch {
     return [];
   }
 }
 
+/**
+ * @param {UsageEntry[]} entries
+ */
 function writeJsonEntries(entries) {
   ensureJsonStorage();
   fs.writeFileSync(jsonDbPath, JSON.stringify(entries, null, 2), 'utf8');
 }
 
 async function initPostgres() {
+  if (!pool) {
+    return false;
+  }
+
   try {
     await pool.query('SELECT 1');
     await pool.query(`
@@ -72,7 +88,8 @@ async function initPostgres() {
 
     return true;
   } catch (error) {
-    console.warn('PostgreSQL unavailable, falling back to local JSON file storage:', error.message);
+    const message = error instanceof Error ? error.message : String(error);
+    console.warn('PostgreSQL unavailable, falling back to local JSON file storage:', message);
     return false;
   }
 }
@@ -88,6 +105,10 @@ async function initDb() {
 async function getUsageEntries() {
   if (useJsonFallback) {
     return readJsonEntries();
+  }
+
+  if (!pool) {
+    throw new Error('Database has not been initialized.');
   }
 
   const result = await pool.query(
@@ -111,12 +132,16 @@ async function getUsageEntries() {
  */
 async function addUsageEntry({ date, hours, watts, cost }) {
   if (useJsonFallback) {
-    const entries = readJsonEntries();
-    const nextId = entries.length ? Math.max(...entries.map(item => item.id)) + 1 : 1;
+    const entries = /** @type {UsageEntry[]} */ (readJsonEntries());
+    const nextId = entries.length ? Math.max(...entries.map((item) => item.id)) + 1 : 1;
     const newEntry = { id: nextId, date, hours, watts, cost };
     entries.push(newEntry);
     writeJsonEntries(entries);
     return newEntry;
+  }
+
+  if (!pool) {
+    throw new Error('Database has not been initialized.');
   }
 
   const result = await pool.query(

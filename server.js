@@ -3,7 +3,7 @@ const path = require('path');
 const { initDb, getUsageEntries, addUsageEntry } = require('./db');
 const suggestionDatasets = require('./data/suggestion_datasets.json');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(express.json());
 
@@ -24,10 +24,15 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/vendor/chart.js', express.static(path.join(__dirname, 'node_modules', 'chart.js', 'dist')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
  * @typedef {{ date: string, hours: number, watts: number, cost: number }} UsageEntry
+ */
+
+/**
+ * @typedef {Error & { code?: string }} ServerError
  */
 
 /**
@@ -98,8 +103,18 @@ app.get('/api/suggestion-datasets', (req, res) => {
 
 initDb()
   .then(() => {
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       console.log(`Energy Consumption Analyzer running at http://localhost:${port}`);
+    });
+
+    server.on('error', error => {
+      const serverError = /** @type {ServerError} */ (error);
+      if (serverError.code === 'EADDRINUSE') {
+        console.error(`Port ${port} is already in use. Stop the running server or set PORT to a different value.`);
+      } else {
+        console.error('Server error:', serverError);
+      }
+      process.exit(1);
     });
   })
   .catch(error => {

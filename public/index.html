@@ -1,75 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Energy Consumption Analyzer</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <meta name="description"
+        content="Monitor household electricity usage and receive personalized energy-saving recommendations.">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Chart.js -->
+  <script src="/vendor/chart.js/chart.umd.js"></script>
 </head>
+
 <body>
+
+  <!-- Navigation -->
   <header>
-    <h1>Energy Consumption Analyzer</h1>
-    <p>Monitor your household electricity usage and discover simple ways to save energy.</p>
+    <nav class="navbar">
+      <h1>⚡ Energy Consumption Analyzer</h1>
+
+      <ul>
+        <li><a href="#usageSection">Usage Log</a></li>
+        <li><a href="#surveySection">Survey</a></li>
+        <li><a href="#chartSection">Analytics</a></li>
+        <li><a href="#tipsSection">Tips</a></li>
+      </ul>
+    </nav>
+
+    <p>
+      Monitor your household electricity usage and discover ways to save energy.
+    </p>
   </header>
 
   <main>
-    <section class="cards" id="summaryCards"></section>
 
-    <section class="panel">
+    <!-- Dashboard Cards -->
+    <section class="cards" id="summaryCards">
+      <p>No usage data available yet.</p>
+    </section>
+
+    <!-- Usage Entry Form -->
+    <section class="panel" id="usageSection">
+
       <h2>Log New Usage</h2>
+
       <form id="usageForm">
-        <label>Date<input type="date" name="date" required /></label>
-        <label>Hours used<input type="number" name="hours" step="0.1" min="0" required /></label>
-        <label>Power (Watts)<input type="number" name="watts" min="0" required /></label>
-        <label>Cost ($)<input type="number" name="cost" step="0.01" min="0" required /></label>
+
+        <label for="date">Date</label>
+        <input
+          id="date"
+          type="date"
+          name="date"
+          required>
+
+        <label for="hours">Hours Used</label>
+        <input
+          id="hours"
+          type="number"
+          name="hours"
+          step="0.1"
+          min="0"
+          placeholder="Example: 5"
+          required>
+
+        <label for="watts">Power Consumption (W)</label>
+        <input
+          id="watts"
+          type="number"
+          name="watts"
+          min="0"
+          placeholder="Example: 100"
+          required>
+
+        <label for="cost">Cost (₹)</label>
+        <input
+          id="cost"
+          type="number"
+          name="cost"
+          step="0.01"
+          min="0"
+          placeholder="Example: 150"
+          required>
+
         <button type="submit">Add Entry</button>
+
       </form>
+
     </section>
 
-    <section class="panel">
+    <!-- Survey Section -->
+    <section class="panel" id="surveySection">
+
       <h2>Household Survey</h2>
+
       <form id="surveyForm">
-        <label>Family size<input type="number" name="familySize" min="1" step="1" required /></label>
-        <label>Total rooms<input type="number" name="totalRooms" min="1" step="1" required /></label>
-        <label>Total LED bulbs<input type="number" name="ledBulbs" min="0" step="1" required /></label>
-        <label>Grid availability hours/day<input type="number" name="gridHours" min="0" max="24" step="0.1" required /></label>
-        <label>Refrigerators<input type="number" name="refrigerators" min="0" step="1" required /></label>
-        <label>Water motors<input type="number" name="waterMotors" min="0" step="1" required /></label>
-        <label>Fans<input type="number" name="fans" min="0" step="1" required /></label>
-        <label>Power cut hours/month<input type="number" name="powerCutHours" min="0" step="1" required /></label>
-        <label>Online usage hours/day<input type="number" name="onlineHours" min="0" max="24" step="0.1" required /></label>
-        <label>Monthly income<input type="number" name="monthlyIncome" min="0" step="10" required /></label>
-        <button type="submit">Get Suggestions</button>
+
+        <fieldset>
+
+          <legend>House Information</legend>
+
+          <label for="familySize">Family Size</label>
+          <input
+            id="familySize"
+            type="number"
+            name="familySize"
+            min="1"
+            placeholder="Number of family members"
+            required>
+
+          <label for="totalRooms">Total Rooms</label>
+          <input
+            id="totalRooms"
+            type="number"
+            name="totalRooms"
+            min="1"
+            required>
+
+          <label for="ledBulbs">LED Bulbs</label>
+          <input
+            id="ledBulbs"
+            type="number"
+            name="ledBulbs"
+            min="0"
+            required>
+
+        </fieldset>
+
+        <fieldset>
+
+          <legend>Electrical Appliances</legend>
+
+          <label for="fans">Fans</label>
+          <input
+            id="fans"
+            type="number"
+            name="fans"
+            min="0"
+            required>
+
+          <label for="refrigerators">Refrigerators</label>
+          <input
+            id="refrigerators"
+            type="number"
+            name="refrigerators"
+            min="0"
+            required>
+
+          <label for="waterMotors">Water Motors</label>
+          <input
+            id="waterMotors"
+            type="number"
+            name="waterMotors"
+            min="0"
+            required>
+
+          <label for="ac">Air Conditioners</label>
+          <input
+            id="ac"
+            type="number"
+            name="ac"
+            min="0">
+
+          <label for="tv">Televisions</label>
+          <input
+            id="tv"
+            type="number"
+            name="tv"
+            min="0">
+
+          <label for="washingMachine">Washing Machines</label>
+          <input
+            id="washingMachine"
+            type="number"
+            name="washingMachine"
+            min="0">
+
+        </fieldset>
+
+        <fieldset>
+
+          <legend>Electricity Details</legend>
+
+          <label for="gridHours">
+            Grid Availability (Hours/Day)
+          </label>
+          <input
+            id="gridHours"
+            type="number"
+            name="gridHours"
+            min="0"
+            max="24"
+            step="0.1"
+            required>
+
+          <label for="powerCutHours">
+            Power Cut Hours/Month
+          </label>
+          <input
+            id="powerCutHours"
+            type="number"
+            name="powerCutHours"
+            min="0"
+            required>
+
+          <label for="onlineHours">
+            Online Usage Hours/Day
+          </label>
+          <input
+            id="onlineHours"
+            type="number"
+            name="onlineHours"
+            min="0"
+            max="24"
+            step="0.1"
+            required>
+
+          <label for="monthlyIncome">
+            Monthly Income (₹)
+          </label>
+          <input
+            id="monthlyIncome"
+            type="number"
+            name="monthlyIncome"
+            min="0"
+            required>
+
+          <label for="solar">
+            Solar Panels Installed?
+          </label>
+          <select id="solar" name="solar">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+
+        </fieldset>
+
+        <button type="submit">
+          Get Personalized Suggestions
+        </button>
+
       </form>
+
     </section>
 
+    <!-- Suggestions -->
     <section class="panel">
+
       <h2>Personalized Suggestions</h2>
-      <ul id="surveySuggestions"></ul>
+
+      <ul id="surveySuggestions">
+        <li>Complete the survey to receive recommendations.</li>
+      </ul>
+
     </section>
 
+    <!-- Analytics Chart -->
+    <section class="panel" id="chartSection">
+
+      <h2>Energy Usage Analytics</h2>
+
+      <canvas id="energyChart"></canvas>
+
+    </section>
+
+    <!-- Usage Table -->
     <section class="panel">
+
       <h2>Usage History</h2>
+
       <table>
+
+        <caption>
+          Household Energy Usage Records
+        </caption>
+
         <thead>
           <tr>
             <th>Date</th>
             <th>Hours</th>
             <th>Watts</th>
             <th>kWh</th>
-            <th>Cost</th>
+            <th>Cost (₹)</th>
           </tr>
         </thead>
+
         <tbody id="usageTable"></tbody>
+
       </table>
+
     </section>
 
+    <!-- Export Buttons -->
     <section class="panel">
-      <h2>Recommendations</h2>
-      <ul id="recommendations"></ul>
+
+      <h2>Export Data</h2>
+
+      <button id="exportCSV">
+        Export CSV
+      </button>
+
+      <button id="exportPDF">
+        Export PDF
+      </button>
+
     </section>
+
+    <!-- Recommendations -->
+    <section class="panel">
+
+      <h2>Recommendations</h2>
+
+      <ul id="recommendations">
+        <li>No recommendations yet.</li>
+      </ul>
+
+    </section>
+
+    <!-- Energy Saving Tips -->
+    <section class="panel" id="tipsSection">
+
+      <h2>Energy Saving Tips</h2>
+
+      <ul>
+        <li>Switch off appliances when not in use.</li>
+        <li>Use LED bulbs instead of incandescent bulbs.</li>
+        <li>Use natural lighting during daytime.</li>
+        <li>Maintain refrigerators efficiently.</li>
+        <li>Turn off chargers after use.</li>
+        <li>Install solar panels if feasible.</li>
+        <li>Use energy-efficient appliances.</li>
+      </ul>
+
+    </section>
+
   </main>
 
+  <footer>
+    <p>
+      © 2026 Energy Consumption Analyzer | Community Service Project
+    </p>
+  </footer>
+
   <script src="app.js"></script>
+
 </body>
 </html>
